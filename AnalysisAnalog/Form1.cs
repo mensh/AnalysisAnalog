@@ -21,17 +21,18 @@ namespace AnalysisAnalog
         private AppLogMesageFizika _appLogMesageFizika;
         private BackgroundWorker _backgroundsearchAndWrite;
         private string _pathhLog;
+
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
         [Serializable]
         public sealed class Analysis : INotifyPropertyChanged
         {
-
             public Analysis()
             {
                 _ArrayFizika.CollectionChanged += _ArrayFizika_CollectionChanged;
             }
 
-            private void _ArrayFizika_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+            private void _ArrayFizika_CollectionChanged(object sender,
+                System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
             {
                 OnPropertyChanged();
             }
@@ -54,6 +55,7 @@ namespace AnalysisAnalog
 
 
             private string _Name;
+
             [Display(GroupName = "<Name|>", Name = "Имя параметра")]
             public string Name
             {
@@ -69,6 +71,7 @@ namespace AnalysisAnalog
             }
 
             private int _Address;
+
             [Display(GroupName = "<Name|>", Name = "Адресс")]
             public int Address
             {
@@ -84,8 +87,9 @@ namespace AnalysisAnalog
             }
 
             private int _Mask;
+
             [Display(GroupName = "<Name|>", Name = "Маска")]
-            public int Mask    
+            public int Mask
             {
                 get => _Mask;
                 set
@@ -97,7 +101,9 @@ namespace AnalysisAnalog
                     }
                 }
             }
+
             private double _CMR;
+
             [Display(GroupName = "<Name|>", Name = "ЦМР")]
             public double Cmr
             {
@@ -111,7 +117,9 @@ namespace AnalysisAnalog
                     }
                 }
             }
+
             private double _SKO;
+
             [Display(GroupName = "<Name|>", Name = "СКО")]
             public double Sko
             {
@@ -126,9 +134,9 @@ namespace AnalysisAnalog
                 }
             }
 
-          
 
             private double _Srednie;
+
             [Display(GroupName = "<Name|>", Name = "Среднее")]
             public double Srednie
             {
@@ -144,6 +152,7 @@ namespace AnalysisAnalog
             }
 
             private double _Fizika;
+
             [Display(GroupName = "<Name|>", Name = "Текущие ФИЗИКА")]
             public double Fizika
             {
@@ -157,8 +166,9 @@ namespace AnalysisAnalog
                     }
                 }
             }
-          
-            private int _SizeArray;  
+
+            private int _SizeArray;
+
             [Display(GroupName = "<Name|>", Name = "Размер массива")]
             public int SizeArray
             {
@@ -196,27 +206,27 @@ namespace AnalysisAnalog
             [NotifyPropertyChangedInvocator]
             private void OnPropertyChanged([CallerMemberName] string propertyName = null)
             {
-              //  PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-                  var handler = PropertyChanged;
-                  if (handler != null)
-                  {
-                      if (Application.OpenForms.Count == 0) return;
-                      var mainForm = Application.OpenForms[0];
-                      if (mainForm == null) return; // No main form - no calls
+                //  PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                var handler = PropertyChanged;
+                if (handler != null)
+                {
+                    if (Application.OpenForms.Count == 0) return;
+                    var mainForm = Application.OpenForms[0];
+                    if (mainForm == null) return; // No main form - no calls
 
-                      if (mainForm.InvokeRequired)
-                      {
-                          // We are not in UI Thread now
-                          mainForm.Invoke(handler, new object[]
-                          {
-                              this, new PropertyChangedEventArgs(propertyName)
-                          });
-                      }
-                      else
-                      {
-                          handler(this, new PropertyChangedEventArgs(propertyName));
-                      }
-                  }
+                    if (mainForm.InvokeRequired)
+                    {
+                        // We are not in UI Thread now
+                        mainForm.Invoke(handler, new object[]
+                        {
+                            this, new PropertyChangedEventArgs(propertyName)
+                        });
+                    }
+                    else
+                    {
+                        handler(this, new PropertyChangedEventArgs(propertyName));
+                    }
+                }
             }
         }
 
@@ -241,11 +251,9 @@ namespace AnalysisAnalog
         }
 
 
-
-
         private void RzReciverRun()
         {
-            if (_rzreciver != null && _rzreciver.Connect ==false)
+            if (_rzreciver != null && _rzreciver.Connect == false)
             {
                 // _rzreciver = new ClassRzReciverNet();
                 _rzreciver.RZ_run();
@@ -264,7 +272,7 @@ namespace AnalysisAnalog
 
         private void _backgroundsearchAndWrite_DoWork(object sender, DoWorkEventArgs e)
         {
-            ReadMessageRzsss((ClassRzReciverNet.ResultReciveTransmitter)e.Argument);
+            ReadMessageRzsss((ClassRzReciverNet.ResultReciveTransmitter) e.Argument);
         }
 
         private void _backgroundsearchAndWrite_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -279,54 +287,47 @@ namespace AnalysisAnalog
 
         private void ReadMessageRzsss(ClassRzReciverNet.ResultReciveTransmitter resultRecive)
         {
-
             var rzMessage = new List<int>(resultRecive.RzMessage);
             try
-            {       
-                  
-                    foreach (int t1 in rzMessage)
+            {
+                foreach (int t1 in rzMessage)
+                {
+                    int address = t1 & 0x000000ff;
+                    int data = (int) ((t1 & 0xffffff00) >> 8);
+                    foreach (var t in analysisBindingSource.List.Cast<Analysis>())
                     {
-                        int address = t1 & 0x000000ff;
-                        int data = (int)((t1 & 0xffffff00) >> 8);
-                        foreach (var gridViewRowInfo in analysisBindingSource.List.Cast<Analysis>())
+                        if (t.Address == address)
                         {
-                            var t = gridViewRowInfo;
-
-                            if (t.Address == address)
+                            var mask = t.Mask;
+                            if (t.ArrayFizika.Count < t.SizeArray)
                             {
-                                var mask = t.Mask;
-                                if (t.ArrayFizika.Count < t.SizeArray)
-                                {
-                                    t.ArrayFizika.Add(t.Fizika);
-                                    t.Counter = t.ArrayFizika.Count;
-                                }
-                                else
-                                {
-                                    t.Srednie = t.ArrayFizika.Average();
-                                    double sumOfSquaresOfDifferences = t.ArrayFizika.Select(val => (val - t.Srednie) * (val - t.Srednie)).Sum();
-                                    t.Sko = Math.Sqrt(sumOfSquaresOfDifferences / t.ArrayFizika.Count);
-                                    t.ArrayFizika.Clear();
-                                }
-
-                                t.Fizika = (Convert.ToDouble(BitConverter.ToInt16(BitConverter.GetBytes(data & mask), 0) * t.Cmr));
-                             
-                                if (barCheckRec.Checked)
-                                {
-                                    _appLogMesageFizika?.Write(analysisBindingSource, _pathhLog);
-                                }
+                                t.ArrayFizika.Add(t.Fizika);
+                                t.Counter = t.ArrayFizika.Count;
+                            }
+                            else
+                            {
+                                t.Srednie = t.ArrayFizika.Average();
+                                double sumOfSquaresOfDifferences =
+                                    t.ArrayFizika.Select(val => (val - t.Srednie) * (val - t.Srednie)).Sum();
+                                t.Sko = Math.Sqrt(sumOfSquaresOfDifferences / t.ArrayFizika.Count);
+                                t.ArrayFizika.Clear();
                             }
 
+                            t.Fizika = (Convert.ToDouble(BitConverter.ToInt16(BitConverter.GetBytes(data & mask), 0) *
+                                                         t.Cmr));
+
+                            if (barCheckRec.Checked)
+                            {
+                                _appLogMesageFizika?.Write(analysisBindingSource, _pathhLog);
+                            }
                         }
                     }
-                   
-                  
+                }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-               
             }
-        
         }
 
         private void BtnRun_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -338,7 +339,8 @@ namespace AnalysisAnalog
         {
             if (chRUNStop.Checked)
             {
-                if (_rzreciver?.BackgroundWorkerReadRz?.IsBusy != true)  _rzreciver?.BackgroundWorkerReadRz?.RunWorkerAsync();
+                if (_rzreciver?.BackgroundWorkerReadRz?.IsBusy != true)
+                    _rzreciver?.BackgroundWorkerReadRz?.RunWorkerAsync();
             }
         }
 
@@ -346,7 +348,7 @@ namespace AnalysisAnalog
         {
             if (sender is GridView view)
             {
-                Analysis row = ((Analysis)view.GetRow(view.FocusedRowHandle));
+                Analysis row = ((Analysis) view.GetRow(view.FocusedRowHandle));
                 if (row == null) return;
                 AddParametr addParametr = new AddParametr(analysisBindingSource);
                 addParametr.ShowParametr(row);
@@ -378,13 +380,12 @@ namespace AnalysisAnalog
             }
 
             analysisBindingSource.Clear();
-          
+
 
             foreach (var t in data)
             {
                 analysisBindingSource.Add(t);
             }
-
         }
 
         private void BtnOpen_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -399,7 +400,7 @@ namespace AnalysisAnalog
         public class AppLogMesageFizika
         {
             //конструктор
-            public  void Write (BindingSource bindingSource, string path)
+            public void Write(BindingSource bindingSource, string path)
             {
                 DateTime currtime = DateTime.Now;
                 StreamWriter file;
@@ -408,15 +409,15 @@ namespace AnalysisAnalog
                 {
                     msg += k.Fizika.ToString("0.0000") + "\t";
                 }
-                using ( file = new StreamWriter(path, true))
+
+                using (file = new StreamWriter(path, true))
                 {
                     string tmptxt = $"{currtime: hh:mm:ss.ff} {msg}";
                     file.WriteLine(tmptxt);
-                    
                 }
+
                 file.Close();
             }
-         
         }
 
         private void BarCheckItem1_CheckedChanged(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
