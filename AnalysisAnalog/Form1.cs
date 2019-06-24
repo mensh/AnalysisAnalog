@@ -19,10 +19,10 @@ namespace AnalysisAnalog
     public partial class Form1 : DevExpress.XtraEditors.XtraForm
     {
         private readonly ClassRzReciverNet _rzreciver = new ClassRzReciverNet();
+        private AppLogMesageFizika _appLogMesageFizika;
         private BackgroundWorker _backgroundsearchAndWrite;
         private DateTime _date1;
-        private Stopwatch _timer;
-
+        private string pathhLog;
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
         [Serializable]
         public sealed class Analysis : INotifyPropertyChanged
@@ -113,35 +113,22 @@ namespace AnalysisAnalog
                     }
                 }
             }
-            private double _Dispersy;
-            [Display(GroupName = "<Name|>", Name = "Дисперсия")]
-            public double Dispersy
+            private double _SKO;
+            [Display(GroupName = "<Name|>", Name = "СКО")]
+            public double SKO
             {
-                get => _Dispersy;
+                get => _SKO;
                 set
                 {
-                    if (Math.Abs(value - _Dispersy) > TOLERANCE)
+                    if (Math.Abs(value - _SKO) > TOLERANCE)
                     {
-                        _Dispersy = value;
+                        _SKO = value;
                         OnPropertyChanged();
                     }
                 }
             }
 
-            private double _DispersyPersent;
-            [Display(GroupName = "<Name|>", Name = "Дисперсия %")]
-            public double DispersyPersent
-            {
-                get => _DispersyPersent;
-                set
-                {
-                    if (Math.Abs(value - _DispersyPersent) > TOLERANCE)
-                    {
-                        _DispersyPersent = value;
-                        OnPropertyChanged();
-                    }
-                }
-            }
+          
 
             private double _Srednie;
             [Display(GroupName = "<Name|>", Name = "Среднее")]
@@ -296,29 +283,20 @@ namespace AnalysisAnalog
         private void ReadMessageRzsss(ClassRzReciverNet.ResultReciveTransmitter resultRecive)
         {
 
-
             var rzMessage = new List<int>(resultRecive.RzMessage);
             try
-            {
+            {       
+                  
                     foreach (int t1 in rzMessage)
                     {
                         int address = t1 & 0x000000ff;
                         int data = (int)((t1 & 0xffffff00) >> 8);
-                        //  _classUserData.bindingSourceActiveBinar.SuspendBinding();
-          
-                        //     _classUserData.bindingSourceActiveBinar.ResumeBinding();
-                        //     _classUserData.bindingSourceActiveAnalog.SuspendBinding();
                         foreach (var gridViewRowInfo in analysisBindingSource.List.Cast<Analysis>())
                         {
                             var t = gridViewRowInfo;
 
                             if (t.Address == address)
                             {
-                                //Разделитель коэффициентов формул
-                  
-                     
-                        
-
                                 var mask = t.Mask;
                                 if (t.ArrayFizika.Count < t.SizeArray)
                                 {
@@ -329,20 +307,22 @@ namespace AnalysisAnalog
                                 {
                                     t.Srednie = t.ArrayFizika.Average();
                                     double sumOfSquaresOfDifferences = t.ArrayFizika.Select(val => (val - t.Srednie) * (val - t.Srednie)).Sum();
-                                    t.Dispersy = Math.Sqrt(sumOfSquaresOfDifferences / t.ArrayFizika.Count);
-                                    t.DispersyPersent = (t.Dispersy / t.Srednie) * 100;
+                                    t.SKO = Math.Sqrt(sumOfSquaresOfDifferences / t.ArrayFizika.Count);
                                     t.ArrayFizika.Clear();
                                 }
 
                                 t.Fizika = (Convert.ToDouble(BitConverter.ToInt16(BitConverter.GetBytes(data & mask), 0) * t.Cmr));
-                                //_series0[gridViewRowInfo.Index] = t.Fizika;
-                                //   t.Point.Y.Add(t.Fizika);
-                                //  if (_timer != null) t.Point.X.Add(_date1.AddMilliseconds(value: _timer.Elapsed.Ticks / 10000));
+                             
+                                if (barCheckRec.Checked)
+                                {
+                                    _appLogMesageFizika?.Write(analysisBindingSource, pathhLog);
+                                }
                             }
 
                         }
-                        //   _classUserData.bindingSourceActiveAnalog.ResumeBinding();
                     }
+                   
+                  
             }
             catch (Exception e)
             {
@@ -415,6 +395,49 @@ namespace AnalysisAnalog
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 ReadStructFromFile(openFileDialog1.FileName);
+            }
+        }
+
+
+        public class AppLogMesageFizika
+        {
+            //конструктор
+            public  void Write (BindingSource bindingSource, string path)
+            {
+                DateTime currtime = DateTime.Now;
+                System.IO.StreamWriter file;
+                string msg = String.Empty;
+                foreach (var k in bindingSource.List.Cast<Analysis>())
+                {
+                    msg += k.Fizika + "\t";
+                }
+                using ( file = new System.IO.StreamWriter(path, true))
+                {
+                    string tmptxt = $"{currtime: hh:mm:ss.ff} {msg}";
+                    file.WriteLine(tmptxt);
+                    
+                }
+                file.Close();
+            }
+         
+        }
+
+        private void BarCheckItem1_CheckedChanged(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            if (barCheckRec.Checked)
+            {
+                if (saveFileDialog2.ShowDialog() == DialogResult.OK)
+                {
+                    _appLogMesageFizika = new AppLogMesageFizika();
+                    pathhLog = saveFileDialog2.FileName;
+                    barStaticItem2.Caption = "Запись в файл " + pathhLog;
+                }
+            }
+
+            if (!barCheckRec.Checked)
+            {
+                _appLogMesageFizika = null;
+                barStaticItem2.Caption = "Запись оставновленна ";
             }
         }
     }

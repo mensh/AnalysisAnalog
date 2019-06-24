@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            DevExpress.XtraSplashScreen.SplashScreenManager splashScreenManager1 = new DevExpress.XtraSplashScreen.SplashScreenManager(this, typeof(global::AnalysisAnalog.SplashScreen1), true, true);
             this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
             this.bar1 = new DevExpress.XtraBars.Bar();
             this.btnOpen = new DevExpress.XtraBars.BarButtonItem();
@@ -37,9 +38,10 @@
             this.btnRun = new DevExpress.XtraBars.BarButtonItem();
             this.chRUNStop = new DevExpress.XtraBars.BarCheckItem();
             this.btnAddParametr = new DevExpress.XtraBars.BarButtonItem();
-            this.btnRec = new DevExpress.XtraBars.BarButtonItem();
+            this.barCheckRec = new DevExpress.XtraBars.BarCheckItem();
             this.bar3 = new DevExpress.XtraBars.Bar();
             this.barStaticItem1 = new DevExpress.XtraBars.BarStaticItem();
+            this.barStaticItem2 = new DevExpress.XtraBars.BarStaticItem();
             this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
@@ -51,12 +53,12 @@
             this.colAddress = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colCMR = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colDispersy = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colDispersyPersent = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colSrednie = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colFizika = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colCounter = new DevExpress.XtraGrid.Columns.GridColumn();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialog2 = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.analysisBindingSource)).BeginInit();
@@ -76,12 +78,13 @@
             this.barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.btnRun,
             this.btnAddParametr,
-            this.btnRec,
             this.barStaticItem1,
             this.chRUNStop,
             this.btnSave,
-            this.btnOpen});
-            this.barManager1.MaxItemId = 8;
+            this.btnOpen,
+            this.barCheckRec,
+            this.barStaticItem2});
+            this.barManager1.MaxItemId = 10;
             this.barManager1.StatusBar = this.bar3;
             // 
             // bar1
@@ -96,7 +99,7 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.btnRun),
             new DevExpress.XtraBars.LinkPersistInfo(this.chRUNStop),
             new DevExpress.XtraBars.LinkPersistInfo(this.btnAddParametr),
-            new DevExpress.XtraBars.LinkPersistInfo(this.btnRec)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.barCheckRec)});
             this.bar1.Text = "Tools";
             // 
             // btnOpen
@@ -140,12 +143,13 @@
             this.btnAddParametr.Name = "btnAddParametr";
             this.btnAddParametr.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BtnAddParametr_ItemClick);
             // 
-            // btnRec
+            // barCheckRec
             // 
-            this.btnRec.Caption = "REC";
-            this.btnRec.Id = 3;
-            this.btnRec.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnRec.ImageOptions.Image")));
-            this.btnRec.Name = "btnRec";
+            this.barCheckRec.Caption = "REC";
+            this.barCheckRec.Id = 8;
+            this.barCheckRec.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barCheckRec.ImageOptions.Image")));
+            this.barCheckRec.Name = "barCheckRec";
+            this.barCheckRec.CheckedChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.BarCheckItem1_CheckedChanged);
             // 
             // bar3
             // 
@@ -155,7 +159,8 @@
             this.bar3.DockRow = 0;
             this.bar3.DockStyle = DevExpress.XtraBars.BarDockStyle.Bottom;
             this.bar3.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.barStaticItem1)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.barStaticItem1),
+            new DevExpress.XtraBars.LinkPersistInfo(this.barStaticItem2)});
             this.bar3.OptionsBar.AllowQuickCustomization = false;
             this.bar3.OptionsBar.DrawDragBorder = false;
             this.bar3.OptionsBar.UseWholeRow = true;
@@ -166,6 +171,12 @@
             this.barStaticItem1.Caption = "Adapter Status";
             this.barStaticItem1.Id = 4;
             this.barStaticItem1.Name = "barStaticItem1";
+            // 
+            // barStaticItem2
+            // 
+            this.barStaticItem2.Caption = "Status Write LOG";
+            this.barStaticItem2.Id = 9;
+            this.barStaticItem2.Name = "barStaticItem2";
             // 
             // barDockControlTop
             // 
@@ -223,7 +234,6 @@
             this.colAddress,
             this.colCMR,
             this.colDispersy,
-            this.colDispersyPersent,
             this.colSrednie,
             this.colFizika,
             this.colCounter});
@@ -257,19 +267,10 @@
             // 
             this.colDispersy.DisplayFormat.FormatString = "0.0000";
             this.colDispersy.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.colDispersy.FieldName = "Dispersy";
+            this.colDispersy.FieldName = "SKO";
             this.colDispersy.Name = "colDispersy";
             this.colDispersy.Visible = true;
             this.colDispersy.VisibleIndex = 3;
-            // 
-            // colDispersyPersent
-            // 
-            this.colDispersyPersent.DisplayFormat.FormatString = "0.0000";
-            this.colDispersyPersent.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.colDispersyPersent.FieldName = "DispersyPersent";
-            this.colDispersyPersent.Name = "colDispersyPersent";
-            this.colDispersyPersent.Visible = true;
-            this.colDispersyPersent.VisibleIndex = 4;
             // 
             // colSrednie
             // 
@@ -278,7 +279,7 @@
             this.colSrednie.FieldName = "Srednie";
             this.colSrednie.Name = "colSrednie";
             this.colSrednie.Visible = true;
-            this.colSrednie.VisibleIndex = 5;
+            this.colSrednie.VisibleIndex = 4;
             // 
             // colFizika
             // 
@@ -287,14 +288,14 @@
             this.colFizika.FieldName = "Fizika";
             this.colFizika.Name = "colFizika";
             this.colFizika.Visible = true;
-            this.colFizika.VisibleIndex = 6;
+            this.colFizika.VisibleIndex = 5;
             // 
             // colCounter
             // 
             this.colCounter.FieldName = "Counter";
             this.colCounter.Name = "colCounter";
             this.colCounter.Visible = true;
-            this.colCounter.VisibleIndex = 7;
+            this.colCounter.VisibleIndex = 6;
             // 
             // saveFileDialog1
             // 
@@ -304,6 +305,15 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.Filter = "an|*.an";
+            // 
+            // saveFileDialog2
+            // 
+            this.saveFileDialog2.FileName = "SaveLog";
+            this.saveFileDialog2.Filter = "TXT|*.txt";
+            // 
+            // splashScreenManager1
+            // 
+            splashScreenManager1.ClosingDelay = 500;
             // 
             // Form1
             // 
@@ -340,14 +350,12 @@
         private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
         private DevExpress.XtraBars.BarButtonItem btnRun;
         private DevExpress.XtraBars.BarButtonItem btnAddParametr;
-        private DevExpress.XtraBars.BarButtonItem btnRec;
         private System.Windows.Forms.BindingSource analysisBindingSource;
         private DevExpress.XtraBars.BarStaticItem barStaticItem1;
         private DevExpress.XtraBars.BarCheckItem chRUNStop;
         private DevExpress.XtraGrid.Columns.GridColumn colAddress;
         private DevExpress.XtraGrid.Columns.GridColumn colCMR;
         private DevExpress.XtraGrid.Columns.GridColumn colDispersy;
-        private DevExpress.XtraGrid.Columns.GridColumn colDispersyPersent;
         private DevExpress.XtraGrid.Columns.GridColumn colSrednie;
         private DevExpress.XtraGrid.Columns.GridColumn colFizika;
         private DevExpress.XtraGrid.Columns.GridColumn colCounter;
@@ -356,6 +364,9 @@
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private DevExpress.XtraBars.BarButtonItem btnOpen;
+        private DevExpress.XtraBars.BarCheckItem barCheckRec;
+        private DevExpress.XtraBars.BarStaticItem barStaticItem2;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog2;
     }
 }
 
