@@ -409,7 +409,7 @@ namespace AnalysisAnalog
                 string msg = String.Empty;
                 foreach (var k in bindingSource.List.Cast<Analysis>())
                 {
-                    msg += k.Fizika + "\t";
+                    msg += k.Fizika.ToString("0.0000") + "\t";
                 }
                 using ( file = new System.IO.StreamWriter(path, true))
                 {
