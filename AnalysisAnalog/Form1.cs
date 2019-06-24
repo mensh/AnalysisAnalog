@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -21,8 +20,7 @@ namespace AnalysisAnalog
         private readonly ClassRzReciverNet _rzreciver = new ClassRzReciverNet();
         private AppLogMesageFizika _appLogMesageFizika;
         private BackgroundWorker _backgroundsearchAndWrite;
-        private DateTime _date1;
-        private string pathhLog;
+        private string _pathhLog;
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
         [Serializable]
         public sealed class Analysis : INotifyPropertyChanged
@@ -115,7 +113,7 @@ namespace AnalysisAnalog
             }
             private double _SKO;
             [Display(GroupName = "<Name|>", Name = "СКО")]
-            public double SKO
+            public double Sko
             {
                 get => _SKO;
                 set
@@ -247,7 +245,6 @@ namespace AnalysisAnalog
 
         private void RzReciverRun()
         {
-            _date1 = DateTime.Now;
             if (_rzreciver != null && _rzreciver.Connect ==false)
             {
                 // _rzreciver = new ClassRzReciverNet();
@@ -307,7 +304,7 @@ namespace AnalysisAnalog
                                 {
                                     t.Srednie = t.ArrayFizika.Average();
                                     double sumOfSquaresOfDifferences = t.ArrayFizika.Select(val => (val - t.Srednie) * (val - t.Srednie)).Sum();
-                                    t.SKO = Math.Sqrt(sumOfSquaresOfDifferences / t.ArrayFizika.Count);
+                                    t.Sko = Math.Sqrt(sumOfSquaresOfDifferences / t.ArrayFizika.Count);
                                     t.ArrayFizika.Clear();
                                 }
 
@@ -315,7 +312,7 @@ namespace AnalysisAnalog
                              
                                 if (barCheckRec.Checked)
                                 {
-                                    _appLogMesageFizika?.Write(analysisBindingSource, pathhLog);
+                                    _appLogMesageFizika?.Write(analysisBindingSource, _pathhLog);
                                 }
                             }
 
@@ -405,13 +402,13 @@ namespace AnalysisAnalog
             public  void Write (BindingSource bindingSource, string path)
             {
                 DateTime currtime = DateTime.Now;
-                System.IO.StreamWriter file;
+                StreamWriter file;
                 string msg = String.Empty;
                 foreach (var k in bindingSource.List.Cast<Analysis>())
                 {
                     msg += k.Fizika.ToString("0.0000") + "\t";
                 }
-                using ( file = new System.IO.StreamWriter(path, true))
+                using ( file = new StreamWriter(path, true))
                 {
                     string tmptxt = $"{currtime: hh:mm:ss.ff} {msg}";
                     file.WriteLine(tmptxt);
@@ -429,8 +426,8 @@ namespace AnalysisAnalog
                 if (saveFileDialog2.ShowDialog() == DialogResult.OK)
                 {
                     _appLogMesageFizika = new AppLogMesageFizika();
-                    pathhLog = saveFileDialog2.FileName;
-                    barStaticItem2.Caption = "Запись в файл " + pathhLog;
+                    _pathhLog = saveFileDialog2.FileName;
+                    barStaticItem2.Caption = "Запись в файл " + _pathhLog;
                 }
             }
 
