@@ -1,43 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Globalization;
-using System.IO;
-using System.Text;
-using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using DevExpress.XtraEditors;
 
 namespace AnalysisAnalog
 {
     public partial class AddParametr : DevExpress.XtraEditors.XtraForm
     {
-
-        BindingSource bindingSource = new BindingSource();
+        readonly BindingSource _bindingSource = new BindingSource();
         public AddParametr(BindingSource _bindingSource)
         {
             InitializeComponent();
             if (_bindingSource != null)
-                bindingSource = _bindingSource;
+                this._bindingSource = _bindingSource;
 
         }
 
         private void SimpleButton1_Click(object sender, EventArgs e)
         {
-            bindingSource.Add(AddNewParametr());
+            _bindingSource.Add(AddNewParametr());
         }
 
-        public Form1.Analysis AddNewParametr()
+        private Form1.Analysis AddNewParametr()
         {
             Form1.Analysis analysis = new Form1.Analysis();
             analysis.SizeArray = (int)spinCountArray.Value;
             analysis.Name = textEditName.Text;
-            analysis.Cmr = ConvertToDouble(spinEditCMR.Value.ToString());
+            analysis.Cmr = ConvertToDouble(spinEditCMR.Value.ToString(CultureInfo.InvariantCulture));
             analysis.Mask = textEditMask.Text.Contains("0x") ? Convert.ToInt32(textEditMask.Text, 16) : Convert.ToInt32(textEditMask.Text);
             analysis.Address = textEditAddress.Text.Contains("0x") ? Convert.ToInt32(textEditAddress.Text, 16) : Convert.ToInt32(textEditAddress.Text);
             return analysis;
@@ -93,8 +82,8 @@ namespace AnalysisAnalog
 
         private void SimpleButton2_Click(object sender, EventArgs e)
         {
-            bindingSource.Remove(current_parametr);
-            bindingSource.Add(AddNewParametr());
+            _bindingSource.Remove(current_parametr);
+            _bindingSource.Add(AddNewParametr());
         }
     }
 }

@@ -397,7 +397,7 @@ namespace AnalysisAnalog
         }
 
 
-        public class AppLogMesageFizika
+        private class AppLogMesageFizika
         {
             //конструктор
             public void Write(BindingSource bindingSource, string path)
