@@ -21,7 +21,7 @@ namespace AnalysisAnalog
         private AppLogMesageFizika _appLogMesageFizika;
         private BackgroundWorker _backgroundsearchAndWrite;
         private string _pathhLog;
-
+        private int counterPocket;
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
         [Serializable]
         public sealed class Analysis : INotifyPropertyChanged
@@ -290,38 +290,48 @@ namespace AnalysisAnalog
             var rzMessage = new List<int>(resultRecive.RzMessage);
             try
             {
-                foreach (int t1 in rzMessage)
+                if (counterPocket == Convert.ToInt32(barEditCounterPocket.EditValue))
                 {
-                    int address = t1 & 0x000000ff;
-                    int data = (int) ((t1 & 0xffffff00) >> 8);
-                    foreach (var t in analysisBindingSource.List.Cast<Analysis>())
+                    foreach (int t1 in rzMessage)
                     {
-                        if (t.Address == address)
+                        int address = t1 & 0x000000ff;
+                        int data = (int) ((t1 & 0xffffff00) >> 8);
+                        foreach (var t in analysisBindingSource.List.Cast<Analysis>())
                         {
-                            var mask = t.Mask;
-                            if (t.ArrayFizika.Count < t.SizeArray)
+                            if (t.Address == address)
                             {
-                                t.ArrayFizika.Add(t.Fizika);
-                                t.Counter = t.ArrayFizika.Count;
-                            }
-                            else
-                            {
-                                t.Srednie = t.ArrayFizika.Average();
-                                double sumOfSquaresOfDifferences =
-                                    t.ArrayFizika.Select(val => (val - t.Srednie) * (val - t.Srednie)).Sum();
-                                t.Sko = Math.Sqrt(sumOfSquaresOfDifferences / t.ArrayFizika.Count);
-                                t.ArrayFizika.Clear();
-                            }
+                                var mask = t.Mask;
+                                if (t.ArrayFizika.Count < t.SizeArray)
+                                {
+                                    t.ArrayFizika.Add(t.Fizika);
+                                    t.Counter = t.ArrayFizika.Count;
+                                }
+                                else
+                                {
+                                    t.Srednie = t.ArrayFizika.Average();
+                                    double sumOfSquaresOfDifferences =
+                                        t.ArrayFizika.Select(val => (val - t.Srednie) * (val - t.Srednie)).Sum();
+                                    t.Sko = Math.Sqrt(sumOfSquaresOfDifferences / t.ArrayFizika.Count);
+                                    t.ArrayFizika.Clear();
+                                }
 
-                            t.Fizika = (Convert.ToDouble(BitConverter.ToInt16(BitConverter.GetBytes(data & mask), 0) *
-                                                         t.Cmr));
+                                t.Fizika = (Convert.ToDouble(
+                                    BitConverter.ToInt16(BitConverter.GetBytes(data & mask), 0) *
+                                    t.Cmr));
 
-                            if (barCheckRec.Checked)
-                            {
-                                _appLogMesageFizika?.Write(analysisBindingSource, _pathhLog);
+                                if (barCheckRec.Checked)
+                                {
+                                    _appLogMesageFizika?.Write(analysisBindingSource, _pathhLog);
+                                }
                             }
                         }
                     }
+
+                    counterPocket = 0;
+                }
+                else
+                {
+                    counterPocket++;
                 }
             }
             catch (Exception e)

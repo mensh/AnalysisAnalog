@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             DevExpress.XtraSplashScreen.SplashScreenManager splashScreenManager1 = new DevExpress.XtraSplashScreen.SplashScreenManager(this, typeof(global::AnalysisAnalog.SplashScreen1), true, true);
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
             this.bar1 = new DevExpress.XtraBars.Bar();
             this.btnOpen = new DevExpress.XtraBars.BarButtonItem();
@@ -59,17 +59,28 @@
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog2 = new System.Windows.Forms.SaveFileDialog();
+            this.bar2 = new DevExpress.XtraBars.Bar();
+            this.barStaticItem3 = new DevExpress.XtraBars.BarStaticItem();
+            this.barEditCounterPocket = new DevExpress.XtraBars.BarEditItem();
+            this.repositoryItemSpinEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
+            this.barStaticItem4 = new DevExpress.XtraBars.BarStaticItem();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.analysisBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSpinEdit1)).BeginInit();
             this.SuspendLayout();
+            // 
+            // splashScreenManager1
+            // 
+            splashScreenManager1.ClosingDelay = 500;
             // 
             // barManager1
             // 
             this.barManager1.Bars.AddRange(new DevExpress.XtraBars.Bar[] {
             this.bar1,
-            this.bar3});
+            this.bar3,
+            this.bar2});
             this.barManager1.DockControls.Add(this.barDockControlTop);
             this.barManager1.DockControls.Add(this.barDockControlBottom);
             this.barManager1.DockControls.Add(this.barDockControlLeft);
@@ -83,8 +94,13 @@
             this.btnSave,
             this.btnOpen,
             this.barCheckRec,
-            this.barStaticItem2});
-            this.barManager1.MaxItemId = 10;
+            this.barStaticItem2,
+            this.barStaticItem3,
+            this.barEditCounterPocket,
+            this.barStaticItem4});
+            this.barManager1.MaxItemId = 13;
+            this.barManager1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.repositoryItemSpinEdit1});
             this.barManager1.StatusBar = this.bar3;
             // 
             // bar1
@@ -311,9 +327,49 @@
             this.saveFileDialog2.FileName = "SaveLog";
             this.saveFileDialog2.Filter = "TXT|*.txt";
             // 
-            // splashScreenManager1
+            // bar2
             // 
-            splashScreenManager1.ClosingDelay = 500;
+            this.bar2.BarName = "Пользовательская 4";
+            this.bar2.DockCol = 1;
+            this.bar2.DockRow = 0;
+            this.bar2.DockStyle = DevExpress.XtraBars.BarDockStyle.Top;
+            this.bar2.FloatLocation = new System.Drawing.Point(225, 131);
+            this.bar2.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.barStaticItem3),
+            new DevExpress.XtraBars.LinkPersistInfo(this.barEditCounterPocket),
+            new DevExpress.XtraBars.LinkPersistInfo(this.barStaticItem4)});
+            this.bar2.Offset = 305;
+            this.bar2.Text = "Пользовательская 4";
+            // 
+            // barStaticItem3
+            // 
+            this.barStaticItem3.Border = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            this.barStaticItem3.Caption = "Обработка каждого";
+            this.barStaticItem3.Id = 10;
+            this.barStaticItem3.Name = "barStaticItem3";
+            // 
+            // barEditCounterPocket
+            // 
+            this.barEditCounterPocket.Caption = "barEditItem1";
+            this.barEditCounterPocket.Edit = this.repositoryItemSpinEdit1;
+            this.barEditCounterPocket.EditValue = "3";
+            this.barEditCounterPocket.Id = 11;
+            this.barEditCounterPocket.Name = "barEditCounterPocket";
+            // 
+            // repositoryItemSpinEdit1
+            // 
+            this.repositoryItemSpinEdit1.AutoHeight = false;
+            this.repositoryItemSpinEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repositoryItemSpinEdit1.IsFloatValue = false;
+            this.repositoryItemSpinEdit1.Mask.EditMask = "N00";
+            this.repositoryItemSpinEdit1.Name = "repositoryItemSpinEdit1";
+            // 
+            // barStaticItem4
+            // 
+            this.barStaticItem4.Caption = "пакета";
+            this.barStaticItem4.Id = 12;
+            this.barStaticItem4.Name = "barStaticItem4";
             // 
             // Form1
             // 
@@ -332,6 +388,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.analysisBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSpinEdit1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -367,6 +424,11 @@
         private DevExpress.XtraBars.BarCheckItem barCheckRec;
         private DevExpress.XtraBars.BarStaticItem barStaticItem2;
         private System.Windows.Forms.SaveFileDialog saveFileDialog2;
+        private DevExpress.XtraBars.Bar bar2;
+        private DevExpress.XtraBars.BarStaticItem barStaticItem3;
+        private DevExpress.XtraBars.BarEditItem barEditCounterPocket;
+        private DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit repositoryItemSpinEdit1;
+        private DevExpress.XtraBars.BarStaticItem barStaticItem4;
     }
 }
 
