@@ -42,6 +42,11 @@
             this.bar3 = new DevExpress.XtraBars.Bar();
             this.barStaticItem1 = new DevExpress.XtraBars.BarStaticItem();
             this.barStaticItem2 = new DevExpress.XtraBars.BarStaticItem();
+            this.bar2 = new DevExpress.XtraBars.Bar();
+            this.barStaticItem3 = new DevExpress.XtraBars.BarStaticItem();
+            this.barEditCounterPocket = new DevExpress.XtraBars.BarEditItem();
+            this.repositoryItemSpinEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
+            this.barStaticItem4 = new DevExpress.XtraBars.BarStaticItem();
             this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
@@ -51,24 +56,19 @@
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colName = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colAddress = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colCMR = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colDispersy = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colCmr = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colSrednie = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colSko = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colFizika = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colCounter = new DevExpress.XtraGrid.Columns.GridColumn();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog2 = new System.Windows.Forms.SaveFileDialog();
-            this.bar2 = new DevExpress.XtraBars.Bar();
-            this.barStaticItem3 = new DevExpress.XtraBars.BarStaticItem();
-            this.barEditCounterPocket = new DevExpress.XtraBars.BarEditItem();
-            this.repositoryItemSpinEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
-            this.barStaticItem4 = new DevExpress.XtraBars.BarStaticItem();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSpinEdit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.analysisBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSpinEdit1)).BeginInit();
             this.SuspendLayout();
             // 
             // splashScreenManager1
@@ -194,6 +194,50 @@
             this.barStaticItem2.Id = 9;
             this.barStaticItem2.Name = "barStaticItem2";
             // 
+            // bar2
+            // 
+            this.bar2.BarName = "Пользовательская 4";
+            this.bar2.DockCol = 1;
+            this.bar2.DockRow = 0;
+            this.bar2.DockStyle = DevExpress.XtraBars.BarDockStyle.Top;
+            this.bar2.FloatLocation = new System.Drawing.Point(225, 131);
+            this.bar2.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.barStaticItem3),
+            new DevExpress.XtraBars.LinkPersistInfo(this.barEditCounterPocket),
+            new DevExpress.XtraBars.LinkPersistInfo(this.barStaticItem4)});
+            this.bar2.Offset = 305;
+            this.bar2.Text = "Пользовательская 4";
+            // 
+            // barStaticItem3
+            // 
+            this.barStaticItem3.Border = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            this.barStaticItem3.Caption = "Обработка каждого";
+            this.barStaticItem3.Id = 10;
+            this.barStaticItem3.Name = "barStaticItem3";
+            // 
+            // barEditCounterPocket
+            // 
+            this.barEditCounterPocket.Caption = "barEditItem1";
+            this.barEditCounterPocket.Edit = this.repositoryItemSpinEdit1;
+            this.barEditCounterPocket.EditValue = "3";
+            this.barEditCounterPocket.Id = 11;
+            this.barEditCounterPocket.Name = "barEditCounterPocket";
+            // 
+            // repositoryItemSpinEdit1
+            // 
+            this.repositoryItemSpinEdit1.AutoHeight = false;
+            this.repositoryItemSpinEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repositoryItemSpinEdit1.IsFloatValue = false;
+            this.repositoryItemSpinEdit1.Mask.EditMask = "N00";
+            this.repositoryItemSpinEdit1.Name = "repositoryItemSpinEdit1";
+            // 
+            // barStaticItem4
+            // 
+            this.barStaticItem4.Caption = "пакета";
+            this.barStaticItem4.Id = 12;
+            this.barStaticItem4.Name = "barStaticItem4";
+            // 
             // barDockControlTop
             // 
             this.barDockControlTop.CausesValidation = false;
@@ -248,9 +292,9 @@
             this.gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colName,
             this.colAddress,
-            this.colCMR,
-            this.colDispersy,
+            this.colCmr,
             this.colSrednie,
+            this.colSko,
             this.colFizika,
             this.colCounter});
             this.gridView1.GridControl = this.gridControl1;
@@ -272,21 +316,12 @@
             this.colAddress.Visible = true;
             this.colAddress.VisibleIndex = 1;
             // 
-            // colCMR
+            // colCmr
             // 
-            this.colCMR.FieldName = "CMR";
-            this.colCMR.Name = "colCMR";
-            this.colCMR.Visible = true;
-            this.colCMR.VisibleIndex = 2;
-            // 
-            // colDispersy
-            // 
-            this.colDispersy.DisplayFormat.FormatString = "0.0000";
-            this.colDispersy.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.colDispersy.FieldName = "SKO";
-            this.colDispersy.Name = "colDispersy";
-            this.colDispersy.Visible = true;
-            this.colDispersy.VisibleIndex = 3;
+            this.colCmr.FieldName = "Cmr";
+            this.colCmr.Name = "colCmr";
+            this.colCmr.Visible = true;
+            this.colCmr.VisibleIndex = 2;
             // 
             // colSrednie
             // 
@@ -295,7 +330,14 @@
             this.colSrednie.FieldName = "Srednie";
             this.colSrednie.Name = "colSrednie";
             this.colSrednie.Visible = true;
-            this.colSrednie.VisibleIndex = 4;
+            this.colSrednie.VisibleIndex = 3;
+            // 
+            // colSko
+            // 
+            this.colSko.FieldName = "Sko";
+            this.colSko.Name = "colSko";
+            this.colSko.Visible = true;
+            this.colSko.VisibleIndex = 4;
             // 
             // colFizika
             // 
@@ -327,50 +369,6 @@
             this.saveFileDialog2.FileName = "SaveLog";
             this.saveFileDialog2.Filter = "TXT|*.txt";
             // 
-            // bar2
-            // 
-            this.bar2.BarName = "Пользовательская 4";
-            this.bar2.DockCol = 1;
-            this.bar2.DockRow = 0;
-            this.bar2.DockStyle = DevExpress.XtraBars.BarDockStyle.Top;
-            this.bar2.FloatLocation = new System.Drawing.Point(225, 131);
-            this.bar2.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.barStaticItem3),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barEditCounterPocket),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barStaticItem4)});
-            this.bar2.Offset = 305;
-            this.bar2.Text = "Пользовательская 4";
-            // 
-            // barStaticItem3
-            // 
-            this.barStaticItem3.Border = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
-            this.barStaticItem3.Caption = "Обработка каждого";
-            this.barStaticItem3.Id = 10;
-            this.barStaticItem3.Name = "barStaticItem3";
-            // 
-            // barEditCounterPocket
-            // 
-            this.barEditCounterPocket.Caption = "barEditItem1";
-            this.barEditCounterPocket.Edit = this.repositoryItemSpinEdit1;
-            this.barEditCounterPocket.EditValue = "3";
-            this.barEditCounterPocket.Id = 11;
-            this.barEditCounterPocket.Name = "barEditCounterPocket";
-            // 
-            // repositoryItemSpinEdit1
-            // 
-            this.repositoryItemSpinEdit1.AutoHeight = false;
-            this.repositoryItemSpinEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.repositoryItemSpinEdit1.IsFloatValue = false;
-            this.repositoryItemSpinEdit1.Mask.EditMask = "N00";
-            this.repositoryItemSpinEdit1.Name = "repositoryItemSpinEdit1";
-            // 
-            // barStaticItem4
-            // 
-            this.barStaticItem4.Caption = "пакета";
-            this.barStaticItem4.Id = 12;
-            this.barStaticItem4.Name = "barStaticItem4";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -385,10 +383,10 @@
             this.Name = "Form1";
             this.Text = "AnalogAnalysis";
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSpinEdit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.analysisBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSpinEdit1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -411,8 +409,6 @@
         private DevExpress.XtraBars.BarStaticItem barStaticItem1;
         private DevExpress.XtraBars.BarCheckItem chRUNStop;
         private DevExpress.XtraGrid.Columns.GridColumn colAddress;
-        private DevExpress.XtraGrid.Columns.GridColumn colCMR;
-        private DevExpress.XtraGrid.Columns.GridColumn colDispersy;
         private DevExpress.XtraGrid.Columns.GridColumn colSrednie;
         private DevExpress.XtraGrid.Columns.GridColumn colFizika;
         private DevExpress.XtraGrid.Columns.GridColumn colCounter;
@@ -429,6 +425,8 @@
         private DevExpress.XtraBars.BarEditItem barEditCounterPocket;
         private DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit repositoryItemSpinEdit1;
         private DevExpress.XtraBars.BarStaticItem barStaticItem4;
+        private DevExpress.XtraGrid.Columns.GridColumn colCmr;
+        private DevExpress.XtraGrid.Columns.GridColumn colSko;
     }
 }
 

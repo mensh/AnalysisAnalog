@@ -110,11 +110,11 @@ namespace AnalysisAnalog
                 get => _CMR;
                 set
                 {
-                    if (Math.Abs(value - _CMR) > TOLERANCE)
-                    {
+       
+              
                         _CMR = value;
                         OnPropertyChanged();
-                    }
+             
                 }
             }
 
@@ -126,11 +126,10 @@ namespace AnalysisAnalog
                 get => _SKO;
                 set
                 {
-                    if (Math.Abs(value - _SKO) > TOLERANCE)
-                    {
+                  
                         _SKO = value;
                         OnPropertyChanged();
-                    }
+                    
                 }
             }
 
@@ -184,7 +183,7 @@ namespace AnalysisAnalog
             }
 
             private int _Counter;
-            private double TOLERANCE = 0.001;
+            private double TOLERANCE = 0.000001;
 
             [Display(GroupName = "<Name|>", Name = "Счетчик")]
             public int Counter
