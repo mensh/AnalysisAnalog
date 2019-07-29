@@ -295,7 +295,7 @@ namespace AnalysisAnalog
             var rzMessage = new List<int>(resultRecive.RzMessage);
             try
             {
-                if (counterPocket == Convert.ToInt32(barEditCounterPocket.EditValue))
+                if (counterPocket >= Convert.ToInt32(barEditCounterPocket.EditValue))
                 {
                     foreach (int t1 in rzMessage)
                     {
