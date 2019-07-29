@@ -72,6 +72,12 @@ namespace AnalysisAnalog
 
             private int _Address;
 
+            [Display(GroupName = "<Name|>", Name = "Min значение")]
+            public double minValue { get; set; }
+            [Display(GroupName = "<Name|>", Name = "Max значение")]
+            public double maxValue { get; set; }
+
+
             [Display(GroupName = "<Name|>", Name = "Адресс")]
             public int Address
             {
@@ -308,9 +314,11 @@ namespace AnalysisAnalog
                                 else
                                 {
                                     t.Srednie = t.ArrayFizika.Average();
-                                    double sumOfSquaresOfDifferences =
-                                        t.ArrayFizika.Select(val => (val - t.Srednie) * (val - t.Srednie)).Sum();
-                                    t.Sko = Math.Sqrt(sumOfSquaresOfDifferences / t.ArrayFizika.Count);
+                                    t.minValue = t.ArrayFizika.Min();
+                                    t.maxValue = t.ArrayFizika.Max();
+
+                                    double sumOfSquaresOfDifferences = t.ArrayFizika.Select(val => (val - t.Srednie) * (val - t.Srednie)).Sum();
+                                    t.Sko = Math.Sqrt(sumOfSquaresOfDifferences / (t.ArrayFizika.Count - 1));
                                     t.ArrayFizika.Clear();
                                 }
 

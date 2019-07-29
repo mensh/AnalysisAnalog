@@ -60,6 +60,8 @@
             this.colSrednie = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colSko = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colFizika = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colmaxValue = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colminValue = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colCounter = new DevExpress.XtraGrid.Columns.GridColumn();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
@@ -205,7 +207,7 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.barStaticItem3),
             new DevExpress.XtraBars.LinkPersistInfo(this.barEditCounterPocket),
             new DevExpress.XtraBars.LinkPersistInfo(this.barStaticItem4)});
-            this.bar2.Offset = 305;
+            this.bar2.Offset = 313;
             this.bar2.Text = "Пользовательская 4";
             // 
             // barStaticItem3
@@ -296,6 +298,8 @@
             this.colSrednie,
             this.colSko,
             this.colFizika,
+            this.colmaxValue,
+            this.colminValue,
             this.colCounter});
             this.gridView1.GridControl = this.gridControl1;
             this.gridView1.Name = "gridView1";
@@ -325,7 +329,7 @@
             // 
             // colSrednie
             // 
-            this.colSrednie.DisplayFormat.FormatString = "0.00";
+            this.colSrednie.DisplayFormat.FormatString = "0.000";
             this.colSrednie.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.colSrednie.FieldName = "Srednie";
             this.colSrednie.Name = "colSrednie";
@@ -334,6 +338,8 @@
             // 
             // colSko
             // 
+            this.colSko.DisplayFormat.FormatString = "0.000";
+            this.colSko.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.colSko.FieldName = "Sko";
             this.colSko.Name = "colSko";
             this.colSko.Visible = true;
@@ -341,12 +347,30 @@
             // 
             // colFizika
             // 
-            this.colFizika.DisplayFormat.FormatString = "0.0000";
+            this.colFizika.DisplayFormat.FormatString = "0.000";
             this.colFizika.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.colFizika.FieldName = "Fizika";
             this.colFizika.Name = "colFizika";
             this.colFizika.Visible = true;
             this.colFizika.VisibleIndex = 5;
+            // 
+            // colmaxValue
+            // 
+            this.colmaxValue.DisplayFormat.FormatString = "0.000";
+            this.colmaxValue.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.colmaxValue.FieldName = "maxValue";
+            this.colmaxValue.Name = "colmaxValue";
+            this.colmaxValue.Visible = true;
+            this.colmaxValue.VisibleIndex = 7;
+            // 
+            // colminValue
+            // 
+            this.colminValue.DisplayFormat.FormatString = "0.000";
+            this.colminValue.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.colminValue.FieldName = "minValue";
+            this.colminValue.Name = "colminValue";
+            this.colminValue.Visible = true;
+            this.colminValue.VisibleIndex = 8;
             // 
             // colCounter
             // 
@@ -427,6 +451,8 @@
         private DevExpress.XtraBars.BarStaticItem barStaticItem4;
         private DevExpress.XtraGrid.Columns.GridColumn colCmr;
         private DevExpress.XtraGrid.Columns.GridColumn colSko;
+        private DevExpress.XtraGrid.Columns.GridColumn colmaxValue;
+        private DevExpress.XtraGrid.Columns.GridColumn colminValue;
     }
 }
 

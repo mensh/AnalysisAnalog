@@ -24,7 +24,7 @@ namespace AnalysisAnalog
         private Form1.Analysis AddNewParametr()
         {
             Form1.Analysis analysis = new Form1.Analysis();
-            analysis.SizeArray = (int)spinCountArray.Value;
+         //   analysis.SizeArray = (int)spinCountArray.Value;
             analysis.Name = textEditName.Text;
             analysis.Cmr = ConvertToDouble(spinEditCMR.Value.ToString(CultureInfo.InvariantCulture));
             analysis.Mask = textEditMask.Text.Contains("0x") ? Convert.ToInt32(textEditMask.Text, 16) : Convert.ToInt32(textEditMask.Text);
@@ -73,7 +73,7 @@ namespace AnalysisAnalog
         {
             current_parametr = parametr;
             textEditName.Text = parametr.Name;
-            spinCountArray.Value = parametr.SizeArray;
+        //    spinCountArray.Value = parametr.SizeArray;
             spinEditCMR.Value = (decimal)parametr.Cmr;
             textEditAddress.Text = parametr.Address.ToString();
             textEditMask.Text = parametr.Mask.ToString();
@@ -84,6 +84,11 @@ namespace AnalysisAnalog
         {
             _bindingSource.Remove(current_parametr);
             _bindingSource.Add(AddNewParametr());
+        }
+
+        private void SimpleButton3_Click(object sender, EventArgs e)
+        {
+            _bindingSource.Remove(current_parametr);
         }
     }
 }

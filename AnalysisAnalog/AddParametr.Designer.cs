@@ -45,9 +45,10 @@
             this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
             this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
             this.dxValidationProvider1 = new DevExpress.XtraEditors.DXErrorProvider.DXValidationProvider(this.components);
-            this.simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
             this.textEditMask = new DevExpress.XtraEditors.TextEdit();
+            this.simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
             this.labelControl5 = new DevExpress.XtraEditors.LabelControl();
+            this.simpleButton3 = new DevExpress.XtraEditors.SimpleButton();
             ((System.ComponentModel.ISupportInitialize)(this.spinCountArray.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.spinEditCMR.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.textEditAddress.Properties)).BeginInit();
@@ -146,21 +147,12 @@
             // 
             // simpleButton1
             // 
-            this.simpleButton1.Location = new System.Drawing.Point(88, 183);
+            this.simpleButton1.Location = new System.Drawing.Point(90, 151);
             this.simpleButton1.Name = "simpleButton1";
             this.simpleButton1.Size = new System.Drawing.Size(161, 23);
             this.simpleButton1.TabIndex = 8;
             this.simpleButton1.Text = "Добавить параметр";
             this.simpleButton1.Click += new System.EventHandler(this.SimpleButton1_Click);
-            // 
-            // simpleButton2
-            // 
-            this.simpleButton2.Location = new System.Drawing.Point(88, 215);
-            this.simpleButton2.Name = "simpleButton2";
-            this.simpleButton2.Size = new System.Drawing.Size(161, 23);
-            this.simpleButton2.TabIndex = 9;
-            this.simpleButton2.Text = "Редактировать  параметр";
-            this.simpleButton2.Click += new System.EventHandler(this.SimpleButton2_Click);
             // 
             // textEditMask
             // 
@@ -172,6 +164,15 @@
             conditionValidationRule5.ErrorText = "This value is not valid";
             this.dxValidationProvider1.SetValidationRule(this.textEditMask, conditionValidationRule5);
             // 
+            // simpleButton2
+            // 
+            this.simpleButton2.Location = new System.Drawing.Point(90, 183);
+            this.simpleButton2.Name = "simpleButton2";
+            this.simpleButton2.Size = new System.Drawing.Size(161, 23);
+            this.simpleButton2.TabIndex = 9;
+            this.simpleButton2.Text = "Редактировать  параметр";
+            this.simpleButton2.Click += new System.EventHandler(this.SimpleButton2_Click);
+            // 
             // labelControl5
             // 
             this.labelControl5.Location = new System.Drawing.Point(31, 119);
@@ -180,11 +181,21 @@
             this.labelControl5.TabIndex = 10;
             this.labelControl5.Text = "Маска";
             // 
+            // simpleButton3
+            // 
+            this.simpleButton3.Location = new System.Drawing.Point(90, 221);
+            this.simpleButton3.Name = "simpleButton3";
+            this.simpleButton3.Size = new System.Drawing.Size(161, 23);
+            this.simpleButton3.TabIndex = 12;
+            this.simpleButton3.Text = "Удалить параметр";
+            this.simpleButton3.Click += new System.EventHandler(this.SimpleButton3_Click);
+            // 
             // AddParametr
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(355, 256);
+            this.Controls.Add(this.simpleButton3);
             this.Controls.Add(this.textEditMask);
             this.Controls.Add(this.labelControl5);
             this.Controls.Add(this.simpleButton2);
@@ -226,5 +237,6 @@
         private DevExpress.XtraEditors.SimpleButton simpleButton2;
         private DevExpress.XtraEditors.TextEdit textEditMask;
         private DevExpress.XtraEditors.LabelControl labelControl5;
+        private DevExpress.XtraEditors.SimpleButton simpleButton3;
     }
 }
